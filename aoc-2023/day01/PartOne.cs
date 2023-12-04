@@ -1,8 +1,9 @@
-﻿namespace aoc_2023;
+﻿namespace aoc_2023.day01;
 
 public class PartOne
 {
-    private static readonly string dir = @"E:\Repository\Advent-of-Code\aoc-2023\aoc-2023\day-01\";
+    private static readonly string dir = @"E:\Repository\Advent-of-Code\aoc-2023\aoc-2023\day01\";
+
     public static void Process(string fileName)
     {
         var result = 0;

@@ -1,4 +1,5 @@
-﻿using aoc_2023;
+﻿using day01 = aoc_2023.day01;
+using day02 = aoc_2023.day02;
 
-PartOne.Process("input.txt");
-PartTwo.Process("input.txt");
+day01.PartOne.Process("input.txt");
+day01.PartTwo.Process("input.txt");

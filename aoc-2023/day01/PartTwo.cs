@@ -2,11 +2,11 @@
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
-namespace aoc_2023;
+namespace aoc_2023.day01;
 
 public class PartTwo
 {
-    private static readonly string dir = @"E:\Repository\Advent-of-Code\aoc-2023\aoc-2023\day-01\";
+    private static readonly string dir = @"E:\Repository\Advent-of-Code\aoc-2023\aoc-2023\day01\";
     private static readonly Dictionary<string, string> numberMap =
         new()
         {
