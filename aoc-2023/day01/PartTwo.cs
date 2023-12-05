@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace aoc_2023.day01;
 
 public class PartTwo
 {
-    private static readonly string dir = @"E:\Repository\Advent-of-Code\aoc-2023\aoc-2023\day01\";
     private static readonly Dictionary<string, string> numberMap =
         new()
         {
@@ -36,7 +33,7 @@ public class PartTwo
 
     public static void Process(string fileName)
     {
-        var filePath = Path.Combine(dir, fileName);
+        var filePath = Path.Combine(Global.InputFilePath, "day01", fileName);
         var lines = File.ReadAllLines(filePath);
 
         /*

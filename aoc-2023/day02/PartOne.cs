@@ -4,8 +4,6 @@ namespace aoc_2023.day02;
 
 public static partial class PartOne
 {
-    private static readonly string dir = @"E:\Repository\Advent-of-Code\aoc-2023\aoc-2023\day02\";
-
     private static readonly Dictionary<string, int> colors =
         new()
         {
@@ -37,7 +35,7 @@ public static partial class PartOne
 
     public static void Process(string fileName)
     {
-        var lines = File.ReadAllLines(Path.Combine(dir, fileName));
+        var lines = File.ReadAllLines(Path.Combine(Global.InputFilePath, "day02", fileName));
         var result = new List<int>();
         var sum = 0;
 

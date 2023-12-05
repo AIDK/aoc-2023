@@ -2,12 +2,10 @@
 
 public class PartOne
 {
-    private static readonly string dir = @"E:\Repository\Advent-of-Code\aoc-2023\aoc-2023\day01\";
-
     public static void Process(string fileName)
     {
         var result = 0;
-        var filePath = Path.Combine(dir, fileName);
+        var filePath = Path.Combine(Global.InputFilePath, "day01", fileName);
         var lines = File.ReadAllLines(filePath);
 
         foreach (var line in lines)
