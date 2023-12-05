@@ -2,7 +2,8 @@
 using day02 = aoc_2023.day02;
 
 const string input = "input.txt";
-const string sample = "sample1.txt";
+
+// const string sample = "sample1.txt";
 
 // day 1
 day01.PartOne.Process(input);

@@ -2,6 +2,5 @@
 
 public static class Global
 {
-    public static string InputFilePath =>
-        @"C:\Repository\Other\Personal\Projects\aoc2023\aoc-2023\aoc-2023\";
+    public static string InputFilePath => @"E:\Repository\Advent-of-Code\aoc-2023\aoc-2023\";
 }
