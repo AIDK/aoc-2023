@@ -31,9 +31,9 @@ public class PartTwo
     // https://www.reddit.com/r/adventofcode/comments/188bu8v/comment/kbkm70x/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button
     private static readonly string pattern = @"(\d|one|two|three|four|five|six|seven|eight|nine)";
 
-    public static void Process(string fileName)
+    public static void Process()
     {
-        var filePath = Path.Combine(Global.InputFilePath, "day01", fileName);
+        var filePath = Path.Combine(@"day01\input.txt");
         var lines = File.ReadAllLines(filePath);
 
         /*

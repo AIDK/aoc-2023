@@ -21,9 +21,9 @@ public static partial class PartTwo
     private const string Blue = "blue";
     private const string Green = "green";
 
-    public static void Process(string fileName)
+    public static void Process()
     {
-        var lines = File.ReadAllLines(Path.Combine(Global.InputFilePath, "day02", fileName));
+        var lines = File.ReadAllLines(@"day02\input.txt");
         var powerSet = new List<int>();
 
         foreach (var line in lines)

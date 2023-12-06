@@ -2,10 +2,10 @@
 
 public class PartOne
 {
-    public static void Process(string fileName)
+    public static void Process()
     {
         var result = 0;
-        var filePath = Path.Combine(Global.InputFilePath, "day01", fileName);
+        var filePath = Path.Combine(@"day01\input.txt");
         var lines = File.ReadAllLines(filePath);
 
         foreach (var line in lines)

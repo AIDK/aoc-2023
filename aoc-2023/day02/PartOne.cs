@@ -33,9 +33,9 @@ public static partial class PartOne
         Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green
     */
 
-    public static void Process(string fileName)
+    public static void Process()
     {
-        var lines = File.ReadAllLines(Path.Combine(Global.InputFilePath, "day02", fileName));
+        var lines = File.ReadAllLines(@"day02\input.txt");
         var result = new List<int>();
         var sum = 0;
 
