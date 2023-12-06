@@ -1,140 +1,130 @@
-﻿using System.Data;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace aoc_2023.day03;
 
 public static partial class PartOne
 {
-    #region Regext
-
     [GeneratedRegex(@"\d+")]
-    private static partial Regex NumberRegex();
+    private static partial Regex MyRegex();
 
-    private static readonly Regex numberRegext = NumberRegex();
-
-    #endregion
-
-    /*
-           467..114..
-           ...*......
-           ..35..633.
-           ......#...
-           617*......
-           .....+.58.
-           ..592.....
-           ......755.
-           ...$.*....
-           .664.598..
-       */
-
-    private static readonly char[] Symbols = ['@', '#', '$', '%', '&', '*', '/', '+', '-', '='];
+    private static char[]? Symbols;
 
     public static void Process()
     {
-        int count = 0;
-        var lines = File.ReadAllLines(@"day03\input.txt");
+        var sum = 0;
 
-        for (int row = 0; row < lines.Length; row++)
+        // initial prework to get all lines from file as well as all unique symbols in file
+        var prepResult = PuzzleSymbols.Prep();
+        var lines = prepResult.lines; // this returns all the lines from our input file
+        Symbols = prepResult.symbols; // this returns all the unique symbols from the input file
+
+        for (int i = 0; i < lines.Length; i++)
         {
-            for (int col = 0; col < lines[row].Length; col++)
+            for (int k = 0; k < lines[i].Length; k++)
             {
-                // gets the current characater
-                var c = lines[row][col];
+                // get the first characater in the
+                // current row for the current column
+                var character = lines[i][k];
 
-                // if the current character is a dot we continue looping
-                if (IsDot(c))
+                // we want to find the symbol so we can start the
+                // process of looking around for any numbers so,
+                // if the current character is a dot(.) we continue looping
+                if (character == '.')
                     continue;
 
-                // the above check passed so we're not a Dot so we have to check whether we're a
-                // symbol and if so, start process of getting any numbers around the symbol
-                if (Symbols.Contains(c))
+                // we start the process once we've found a symbol
+                if (Symbols.Contains(character))
                 {
+                    // Console.WriteLine($"Character ({lines[i][k]}) found on line {i} column {k}");
+                    var result = 0;
                     /*
-                        In order to perform the diagonal check we need to check 3 rows at a time (previous, current and next),
-                        this will allow us to find any numbers that are near to a symbol -
+                        Now we need to perform a check on the grid to see whether there are any numbers around the symbol we found.
+                        We need to check the current position outward 1 position at a time, this includes diagonal checks.
+
+                        1) One way is to keep some sort of array with coordinates spanning 1 position outward in every direction -
+                            (Left-Top, Left, Left-Bottom, Center, Center-Top, Center-Bottom, Right-Top, Right, Right-Bottom)
                         
-                        (within 1 position of our current location: left-up, left, left-down, up, center, down, right-up, right, right-down). See Coords.png
+                        2) Another is to check 3 lines of the grid at time i.e. Previous, Current and Next -
+                            this should allow for diagonal checks (Left-Top, Left-Bottom, Right-Top, Right-Bottom)
                     */
 
-                    // at this point we've located a symbol on the grid, so we now have to start looking
-                    // for any adjacent numbers (remembering to keep the diagonal check in mind)
-                    var result = Get(lines[row - 1], col);
+                    // we loop through 3 lines at a time, then calculate the sum total of the valid numbers we found
+                    var numbers = new int[,]
+                    {
+                        { GetNumber(k, lines[i - 1]) },
+                        { GetNumber(k, lines[i]) },
+                        { GetNumber(k, lines[i + 1]) }
+                    };
 
-                    // now we perform the same check but for the current row we're on
-                    result += Get(lines[row], col);
+                    for (int n = 0; n <= numbers.GetUpperBound(0); n++)
+                    {
+                        result += numbers[n, 0];
+                    }
 
-                    // now we check the upcoming row for any numbers
-                    result += Get(lines[row + 1], col);
-
-                    count += result;
+                    sum += result;
                 }
             }
         }
 
-        Console.WriteLine(count);
+        Console.WriteLine(sum);
     }
 
-    private static int Get(string line, int col)
+    private static int GetNumber(int pos, string line)
     {
         /*
-            We've located a symbol in the grid and thus we have to start checking for any numbers
-            but we need to know where to check so we create a list of indexes on the grid to check around the symbol's position
+            467..114..
+            ...*......
+            ..35..633.
+            ......#...
+            617*......
+            .....+.58.
+            ..592.....
+            ......755.
+            ...$.*....
+            .664.598..
+                
+         */
 
-            We know the current location of the symble (col),
-            we need to check the position before the current (col - 1) and,
-            we need to check the position after the current (col + 1)
+        var position = new int[] { pos - 1, pos, pos + 1 };
+
+        /*
+           To help with checking diagonally around the symbol we can store the position of the symbol in the grid.
+           We do this by keeping track of the symbol's current position [k],
+           the position before the symbol [k - 1] and the position after the symbol [k + 1]
         */
 
-        int count = 0;
-        // left position (col - 1) / current position (col) / right position (col + 1)
-        var indexes = new List<int>() { col - 1, col, col + 1 };
+        var count = 0;
 
-        // once again we make use of Regex to pull the the numbers found per line
-        var matches = numberRegext.Matches(line);
+        // we're going to make use of Regex to get the number
+        // (makes it much easier to get the whole number in the end - doesnt require any additional loop etc.)
+        var matches = MyRegex().Matches(line);
         foreach (var match in matches.Cast<Match>())
         {
-            // get the numerical value (i.e. 416 or 667 etc)
             var number = match.Value;
+            var length = match.Length;
+            // gives us the index of where the number starts in the current row
+            var idx = match.Index;
+            var loopCount = idx + length;
 
             /*
-                now we have to perform a check to determine whether any part of the number we've found exists within our "placeholder indexes"
-                i.e. is the number within 1 position of our symbol?
-
-                ....
-                467.
-                ...*
-                
-                OR
-                ....
-                633.
-                #...
-                
+                now that we've found a number, we can start to check whether its within the range of the symbol.
+                we do this by looping through the number's indexes (i.e. starting index until the last index)
             */
+            for (int l = idx; l < loopCount; l++)
+            {
+                // if current index (l), of the number matches PrevPos, CurPos or NextPos
+                // then we've successfully matched a number around the symbol
+                if (position.Contains(l))
+                {
+                    // we add the number found to our overall count
+                    count += int.Parse(number);
+                    break;
+                }
+            }
 
-            // we start by passing the current placeholder indexes,
-            // the index of the matched number (regex allows us to gain this information)
-            // and the length of the number found (will be used as part of our loop in the next method)
-            if (CheckNumberIndex(indexes, match.Index, match.Length))
-                // if the number we found is within our placeholder index range we add the number to our counter
-                count += int.Parse(number);
+            continue;
         }
 
         return count;
     }
-
-    private static bool CheckNumberIndex(List<int> idx, int startIndex, int length)
-    {
-        // now we loop through the number's indexes to determine whether its in range
-        for (int i = startIndex; i < startIndex + length; i++)
-        {
-            // the number's index falls within our placeholder range so we can return True
-            if (idx.Contains(i))
-                return true;
-        }
-
-        // no match found (number is outside our placeholder range)
-        return false;
-    }
-
-    private static bool IsDot(char c) => c == '.';
 }
