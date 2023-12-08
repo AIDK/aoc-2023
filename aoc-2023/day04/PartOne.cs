@@ -20,9 +20,7 @@ public static partial class PartOne
     */
     public static void Process()
     {
-        var lines = File.ReadAllLines(
-            @"C:\Repository\Other\Personal\Projects\aoc2023\aoc-2023\aoc-2023\day04\input.txt"
-        );
+        var lines = File.ReadAllLines(@"day04/input.txt");
 
         int sum = 0;
 
