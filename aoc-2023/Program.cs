@@ -12,3 +12,4 @@ day02.PartTwo.Process();
 
 // day 3
 day03.PartOne.Process();
+day03.PartTwo.Process();
