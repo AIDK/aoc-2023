@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Globalization;
-using System.Linq;
-using System.Reflection.PortableExecutable;
+﻿using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace aoc_2023.day03;
