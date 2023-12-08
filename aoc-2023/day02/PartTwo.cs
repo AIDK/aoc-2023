@@ -23,7 +23,7 @@ public static partial class PartTwo
 
     public static void Process()
     {
-        var lines = File.ReadAllLines(@"day02\input.txt");
+        var lines = Extractor.Extract(@"day02\input.txt");
         var powerSet = new List<int>();
 
         foreach (var line in lines)

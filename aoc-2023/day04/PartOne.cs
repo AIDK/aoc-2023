@@ -20,8 +20,7 @@ public static partial class PartOne
     */
     public static void Process()
     {
-        var lines = File.ReadAllLines(@"day04/input.txt");
-
+        var lines = Extractor.Extract(@"day04/input.txt");
         int sum = 0;
 
         // extract the card numbers

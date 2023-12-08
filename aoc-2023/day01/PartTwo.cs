@@ -33,8 +33,7 @@ public class PartTwo
 
     public static void Process()
     {
-        var filePath = Path.Combine(@"day01\input.txt");
-        var lines = File.ReadAllLines(filePath);
+        var lines = Extractor.Extract(@"day01\input.txt");
 
         /*
           - we need to keep track of the first and last numbers found, so we creaet an array to hold these values
