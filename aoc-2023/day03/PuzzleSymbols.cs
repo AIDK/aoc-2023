@@ -5,7 +5,7 @@ public static class PuzzleSymbols
     public static (char[] symbols, string[] lines) Prep()
     {
         var symbols = new List<string>();
-        var lines = File.ReadAllLines(@"day03\input.txt");
+        var lines = Extractor.Extract(@"day03\input.txt");
 
         for (int i = 0; i < lines.Length; i++)
         {

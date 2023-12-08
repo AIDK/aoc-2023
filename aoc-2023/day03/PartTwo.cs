@@ -32,7 +32,7 @@ public static partial class PartTwo
 
     public static void Process()
     {
-        var lines = File.ReadAllLines(@"day03\input.txt");
+        var lines = Extractor.Extract(@"day03\input.txt");
         var numberRegex = NumberRegEx();
         var symbolRegex = SymbolRegEx();
         var numbers = new List<Number>();

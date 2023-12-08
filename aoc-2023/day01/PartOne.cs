@@ -5,8 +5,7 @@ public class PartOne
     public static void Process()
     {
         var result = 0;
-        var filePath = Path.Combine(@"day01\input.txt");
-        var lines = File.ReadAllLines(filePath);
+        var lines = Extractor.Extract(@"day01\input.txt");
 
         foreach (var line in lines)
         {

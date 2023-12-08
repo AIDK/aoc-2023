@@ -35,7 +35,7 @@ public static partial class PartOne
 
     public static void Process()
     {
-        var lines = File.ReadAllLines(@"day02\input.txt");
+        var lines = Extractor.Extract(@"day02\input.txt");
         var result = new List<int>();
         var sum = 0;
 
