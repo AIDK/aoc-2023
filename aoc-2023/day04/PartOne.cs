@@ -39,11 +39,19 @@ public static partial class PartOne
             var totalMatches = winningNumbers.Intersect(myNumbers).Count();
 
             /*
+            NOTE
                 Now we need to calculate the total number of matches and multiply 2 by itself the number of times equal to the total matches,
                 e.g. if there are 3 matches, we do 2 * 2 * 2
 
                 We have to make sure to check whether there is only 1 match or whether this is the first interation of the loop, in which case
                 we set the count to 1, otherwise we multiply the count by 2
+
+                OPTIMIZE: the for loop be simplified by implementing left-bit shift operator (<<)
+                https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/left-shift-operator
+               
+                e.g count = 1 << 3; is the same as count = 1 * 2 * 2 * 2;
+                e.g.count = 1 << 2; is the same as count = 1 * 2 * 2;
+                e,g.count = 1 << 1; is the same as count = 1 * 2;
             */
 
             var count = 0;

@@ -24,15 +24,18 @@ public static partial class PartTwo
         var cardCount = Array.Empty<int>();
 
         /*
+        NOTE
              We want to get a list of all the cards we have to start with,
              so we can initialize our 'cardCount' array and set each card index to 1
 
             e.g. cardCount[0] = 1, cardCount[1] = 1, cardCount[2] = 1, etc.
             
             An very easy way to do this is to just use a standard for loop, but i wanted to try out Aggregate :)
+            https://www.codingame.com/playgrounds/213/using-c-linq---a-practical-overview/aggregate
+
+            OPTIMIZE: this can be simplified to cardCount = Enumerable.Repeat(1, lines.Length).ToArray();
         */
 
-        // https://www.codingame.com/playgrounds/213/using-c-linq---a-practical-overview/aggregate
         _ = lines.Aggregate(
             0, // seed value (starting point)
             (a, _) => // function to apply to each element
@@ -45,6 +48,7 @@ public static partial class PartTwo
 
         for (int i = 0; i < lines.Length; i++)
         {
+            // OPTIMIZE: this variable is not needed, we can just use 'i' directly
             // get the current card id
             var currentId = i;
 
@@ -57,10 +61,12 @@ public static partial class PartTwo
             // Console.WriteLine($"Card {i + 1} has {matches} matches");
             for (int k = 0; k < matches; k++)
             {
+                // OPTIMIZE: this variable is not needed, we can just use 'k' directly
                 // get the id of the matching card
                 var matchingId = k;
 
                 /*
+                NOTE
                     We need to update our 'cardCount' array to reflect the number of matches for each card.
                     In order to do this, we need to add the current count to the next count.
 
@@ -70,10 +76,25 @@ public static partial class PartTwo
                     we then increase the count of that card by the number of copies of the current card
                 */
 
+                // OPTIMIZE: this can be simplified to cardCount[i + k + 1] += cardCount[i];
+                // NOIDEA: why/how does this work?
                 cardCount[currentId + matchingId + 1] += cardCount[currentId];
             }
         }
 
+        /*
+        NOTE
+            Total can be summed using Aggregate or Sum or Where and Aggregate
+            
+            // Aggregate() - https://www.codingame.com/playgrounds/213/using-c-linq---a-practical-overview/aggregate
+            Console.WriteLine(cardCount.Aggregate(0, (a, b) => a + b));
+
+            // Sum() - https://www.codingame.com/playgrounds/213/using-c-linq---a-practical-overview/sum
+            Console.WriteLine(cardCount.Sum());
+
+            // where() and Aggregate()
+            Console.WriteLine(cardCount.Where(n => n > 0).Aggregate(0, (a, b) => a + b));
+         */
         Console.WriteLine(cardCount.Sum());
     }
 

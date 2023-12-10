@@ -38,17 +38,31 @@ public static partial class PartOne
                     // Console.WriteLine($"Character ({lines[i][k]}) found on line {i} column {k}");
                     var result = 0;
                     /*
+                    NOTE
                         Now we need to perform a check on the grid to see whether there are any numbers around the symbol we found.
                         We need to check the current position outward 1 position at a time, this includes diagonal checks.
 
                         1) One way is to keep some sort of array with coordinates spanning 1 position outward in every direction -
                             (Left-Top, Left, Left-Bottom, Center, Center-Top, Center-Bottom, Right-Top, Right, Right-Bottom)
-                        
+                    SUGGEST
                         2) Another is to check 3 lines of the grid at time i.e. Previous, Current and Next -
                             this should allow for diagonal checks (Left-Top, Left-Bottom, Right-Top, Right-Bottom)
+
+                        3) Another way is to possibly make use of jagged arrays, that way we dont have to loop
+                           through the result in the end to get the sum: - https://www.geeksforgeeks.org/c-sharp-jagged-arrays/
+                           
+                           int[][] numbers =
+                            [
+                                [GetNumber(k, lines[i - 1])],
+                                [GetNumber(k, lines[i])],
+                                [GetNumber(k, lines[i + 1])]
+                            ];
+
+                            var num1 = numbers[0][0];
+                            num1 += numbers[1][0];
+                            num1 += numbers[2][0];
                     */
 
-                    // we loop through 3 lines at a time, then calculate the sum total of the valid numbers we found
                     var numbers = new int[,]
                     {
                         { GetNumber(k, lines[i - 1]) },

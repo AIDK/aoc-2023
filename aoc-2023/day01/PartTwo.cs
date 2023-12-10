@@ -57,6 +57,8 @@ public class PartTwo
               we also perform a quick check on the value to see whether its numeric or not,
               when not numeric we get the numeric counterpart from our "numberMap"
             */
+
+            // SUGGEST: invert the ternary operator to make it more readable
             result[i, 0] =
                 (
                     !IsDigit(firstValue)
@@ -64,7 +66,7 @@ public class PartTwo
                         : Convert.ToInt32(firstValue)
                 ) * 10;
 
-            // last number
+            // SUGGEST: invert the ternary operator to make it more readable
             result[i, 1] = !IsDigit(lastValue)
                 ? Convert.ToInt32(numberMap[lastValue])
                 : Convert.ToInt32(lastValue);

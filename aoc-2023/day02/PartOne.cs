@@ -56,15 +56,22 @@ public static partial class PartOne
 
                 // we attempt retrieving the game id where the current number of the cube is
                 // outside our max cube count (red 12, green 13, blue 14)
+
+                // SUGGEST: for readability we can make use of a for loop here instead of LINQ?
                 result.AddRange(
                     from resultItem in results
+
                     // here we use our custom "number color" regex to get the individual set details (1 blue)
                     let match = numberColorRegEx.Match(resultItem)
                     let number = match.Groups["number"].Value
                     let color = match.Groups["color"].Value
+
                     // we're looking for any result where the current number
                     // of the set is greater than the allowed max cube for the colored cube
+
+                    // SUGGEST: we should'nt need to convert to uint32, we should be able to just parse to int
                     where Convert.ToUInt32(number) > colors[color]
+
                     // we only want to game id
                     // (will be used later to exclude the invalid ids from our Sum())
                     select id
