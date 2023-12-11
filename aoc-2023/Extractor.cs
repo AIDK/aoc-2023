@@ -9,9 +9,7 @@ public static class Extractor
     private static bool IsDebuggerAttached() => Debugger.IsAttached;
 
     private static string GetFilePath(string path) =>
-        IsDebuggerAttached()
-            ? @$"C:\Repository\Other\Personal\Projects\aoc2023\aoc-2023\aoc-2023\{path}"
-            : path;
+        IsDebuggerAttached() ? @$"E:\Repository\Github\Projects\aoc-2023\aoc-2023\{path}" : path;
 
     public static FileStream ExtractUsingFileStream(string path) =>
         File.OpenRead(GetFilePath(path));

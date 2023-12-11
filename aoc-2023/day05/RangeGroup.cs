@@ -1,25 +1,22 @@
 namespace aoc_2023.day05;
 
-public class RangeGroup()
+public class RangeGroup(SeedRange[] ranges)
 {
-    private readonly SeedRange[] ranges;
+    private readonly SeedRange[]? ranges = ranges;
 
-    public RangeGroup(SeedRange[] ranges)
-        : this()
+    public long Map(long seed)
     {
-        this.ranges = ranges;
-    }
-
-    public long Map(long value)
-    {
-        foreach (var range in ranges)
+        if (ranges != null)
         {
-            if (range.IsInRange(value))
+            foreach (var range in ranges)
             {
-                return range.MapSeedRange(value);
+                if (range.IsInRange(seed))
+                {
+                    return range.MapSeedRange(seed);
+                }
             }
         }
 
-        return value;
+        return seed;
     }
 }

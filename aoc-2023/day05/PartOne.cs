@@ -1,7 +1,21 @@
-﻿namespace aoc_2023.day05;
+﻿using System.Security;
+
+namespace aoc_2023.day05;
 
 public static class PartOne
 {
+    private static readonly Dictionary<int, string> Categories =
+        new()
+        {
+            { 0, "seed-to-soil map:" },
+            { 1, "soil-to-fertilizer map:" },
+            { 2, "fertilizer-to-water map:" },
+            { 3, "water-to-light map:" },
+            { 4, "light-to-temperature map:" },
+            { 5, "temperature-to-humidity map:" },
+            { 6, "humidity-to-location map:" },
+        };
+
     public static void Process()
     {
         using var inputStream = Extractor.ExtractUsingFileStream(@"day05\input.txt");
@@ -80,12 +94,7 @@ public static class PartOne
              */
 
             var groups = new RangeGroup(seedRanges.ToArray());
-            for (int k = 0; k < seeds.Length; k++)
-            {
-                // we update the seed value with the new value
-                // e.g. 1 => 2
-                seeds[k] = groups.Map(seeds[k]);
-            }
+            seeds = seeds.Select(groups.Map).ToArray();
         }
 
         Console.WriteLine(seeds.Min());

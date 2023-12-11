@@ -14,8 +14,7 @@ public class SeedRange()
         this.rangeLength = rangeLength;
     }
 
-    public bool IsInRange(long value) =>
-        value >= sourceStart && value < (sourceStart + rangeLength);
+    public bool IsInRange(long seed) => seed >= sourceStart && seed < (sourceStart + rangeLength);
 
-    public long MapSeedRange(long value) => destinationStart + (value - sourceStart);
+    public long MapSeedRange(long seed) => destinationStart + (seed - sourceStart);
 }
