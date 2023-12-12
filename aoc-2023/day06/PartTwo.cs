@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace aoc_2023.day06;
+﻿namespace aoc_2023.day06;
 
 public static class PartTwo
 {
@@ -13,12 +11,13 @@ public static class PartTwo
 
         var lines = Extractor.Extract(@"day06/input.txt");
         var time = GetNumbers(lines[0]);
+        var distance = GetNumbers(lines[1]);
         var output = 0L;
 
         for (long i = 0; i < time; i++)
         {
             // we perform the same calculation as in PartOne
-            if ((time - i) * i > GetNumbers(lines[1]))
+            if ((time - i) * i > distance)
             {
                 // we increment our output by 1 if the condition is met (i.e we have a way to win)
                 output++;
