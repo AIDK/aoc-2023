@@ -10,6 +10,7 @@
 *.userosscache
 *.sln.docstates
 *.txt
+FileSystem.cs
 
 !sample1.txt
 !sample2.txt
