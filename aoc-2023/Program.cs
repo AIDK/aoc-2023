@@ -29,5 +29,6 @@ day05.PartOne.Process();
 day06.PartOne.Process();
 day06.PartTwo.Process();
 
-// day 7
+//day 7
 day07.PartOne.Process();
+day07.PartTwo.Process();

@@ -1,6 +1,6 @@
 ﻿namespace aoc_2023.day07;
 
-public static class PartOne
+public static class PartTwo
 {
     public static void Process()
     {
@@ -49,7 +49,6 @@ public static class PartOne
             'A',
             'K',
             'Q',
-            'J',
             'T',
             '9',
             '8',
@@ -59,26 +58,36 @@ public static class PartOne
             '4',
             '3',
             '2',
+            'J'
         ];
         private readonly Dictionary<char, int> cardCounts = [];
         private readonly string cards;
         private readonly int bid;
         public int Bid => bid;
+        public int Joker { get; private set; }
 
         public Hand(string cards, int bid)
         {
             this.cards = cards;
             this.bid = bid;
 
-            // the dictionary needs to be initialised with starting ranks (so we set the count for each card to 0)
             foreach (var rank in Ranks)
             {
+                // the dictionary needs to be initialised with starting ranks (so we set the count for each card to 0)
                 cardCounts.Add(rank, 0);
             }
 
-            // now for each of the cards in the hand we increment the count for that card by 1
             for (int i = 0; i < cards.Length; i++)
             {
+                // we need to check if the card is a joker, if it is we increment the joker count
+                // and continue because we want to exclude the joker from the card count
+                if (cards[i] == 'J')
+                {
+                    Joker++;
+                    continue;
+                }
+
+                // else we increment the card count
                 cardCounts[cards[i]]++;
             }
         }
@@ -88,27 +97,35 @@ public static class PartOne
             // https://blog.stackademic.com/building-a-simple-poker-hand-evaluator-in-c-1bb81676c25c#:~:text=8.-,IsTwoPair,with%20the%20same%20face%20value.
 
             // we have 5 cards, so we return 7 (i.e. Five of a Kind)
-            if (cardCounts.Any(c => c.Value == 5))
+            if (cardCounts.Any(c => c.Value == (5 - Joker))) // i.e. 4 cards with the same rank + 1 joker => 5 of a kind
                 return 7;
 
             // we have 4 cards, so we return 6 (i.e. Four of a Kind)
-            if (cardCounts.Any(c => c.Value == 4))
+            if (cardCounts.Any(c => c.Value == (4 - Joker))) // i.e. 2 cards with the same rank + 2 jokers => 4 of a kind
                 return 6;
 
             // we have 5 cards, so we return 5 (i.e. Full House)
-            if (cardCounts.Any(c => c.Value == 3) && cardCounts.Any(c => c.Value == 2))
+            if (
+                (cardCounts.Any(c => c.Value == 3) && cardCounts.Any(c => c.Value == 2)) // i.e. 3 cards with the same rank + 2 cards with the same rank
+                || (Joker == 1 && cardCounts.Count(c => c.Value == 2) == 2) // i.e. 4 cards (2 pairs) + 1 joker
+                || (Joker >= 2 && cardCounts.Any(c => c.Value == 2)) // i.e. 3 cards (1 pair) + 2 jokers
+            )
                 return 5;
 
             // we have 3 cards, so we return 3 (i.e. Three of a Kind)
-            if (cardCounts.Any(c => c.Value == 3))
+            if (cardCounts.Any(c => c.Value == (3 - Joker))) // i.e. 1 card with the same rank + 2 jokers => 3 of a kind
                 return 4;
 
-            // we have 2 cards, so we return 2 (i.e. Two Pairs)
-            if (cardCounts.Count(c => c.Value == 2) == 2)
+            // we have 4 cards, so we return 2 (i.e. Two Pairs)
+            if (
+                cardCounts.Count(c => c.Value == 2) == 2 // i.e. 4 cards (2 pairs)
+                || (Joker == 1 && cardCounts.Any(c => c.Value == 2)) // i.e. 3 cards (1 pair) + 1 joker
+                || Joker == 2 // i.e. 2 cards (1 pair) + 2 jokers
+            )
                 return 3;
 
             // we have 2 cards, so we return 2 (i.e. One Pair)
-            if (cardCounts.Any(c => c.Value == 2))
+            if (cardCounts.Any(c => c.Value == (2 - Joker))) // i.e. 1 card with the same rank + 1 joker => 2 of a kind
                 return 2;
 
             // high card
